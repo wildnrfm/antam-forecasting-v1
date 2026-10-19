@@ -1,0 +1,1 @@
+{"setup": "C_domestik", "model": "adaboost", "horizon": 20, "MAE": 58944.70254220462, "RMSE": 89072.75856651257, "sMAPE": 3.092583160193145, "MAPE": 3.0848315981578343, "test_n": 861, "waktu_detik": 11.7, "protocol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo", "rev": "ml-r2", "data_hash": "7aea8db80d44"}

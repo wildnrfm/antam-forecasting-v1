@@ -1,0 +1,7 @@
+{
+ "dpformer": "dpformer",
+ "dl": "gru_att",
+ "ml": "adaboost",
+ "kriteria": "peringkat rata-rata MAE dalam kelompok (2 setup x horizon); seri: rata-rata pct_vs_drift; DPformer tetap",
+ "protocol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo"
+}

@@ -1,0 +1,1 @@
+{"setup": "skenario_b", "model": "extra_trees", "horizon": 30, "MAE": 83116.46651404475, "RMSE": 126275.00345679856, "sMAPE": 4.250854670114369, "MAPE": 4.134718352805374, "test_n": 859, "waktu_detik": 4.3, "protocol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo", "rev": "ml-r2", "data_hash": "7aea8db80d44"}

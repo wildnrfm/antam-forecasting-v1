@@ -1,0 +1,1 @@
+{"setup": "univariat", "model": "catboost", "horizon": 20, "MAE": 50233.8459266723, "RMSE": 66147.97503158497, "sMAPE": 2.9667219282738078, "MAPE": 2.9201635421166454, "test_n": 260, "waktu_detik": 0.8, "protocol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo", "rev": "ml-r2", "data_hash": "7aea8db80d44"}

@@ -1,0 +1,4 @@
+harapan,ukuran,terpenuhi
+E1  hari_t lebih baik dari lag1 pada h=1,median rasio 0.927; 10/10 model < 1; 9 lolos BH,True
+E2  plasebo TIDAK lebih baik dari lag1 pada h=1,median rasio 1.009; 2/10 model < 1; 0 lolos BH; perbaikan median -0.9% vs 7.3% (hari_t),True
+E3  hari_t tidak memberi perbaikan konsisten pada h>=5,0/40 uji lolos BH; median rasio 1.001,True

@@ -1,0 +1,16 @@
+feature,importance
+lag_0,0.0
+lag_1,0.0
+lag_2,0.0
+lag_3,0.0
+lag_5,0.0
+lag_7,0.0
+lag_14,0.0
+lag_21,0.0
+lag_30,0.0
+roll_mean_7,16.183133031215405
+roll_std_7,6.293525587843879
+roll_mean_14,19.636535913601154
+roll_std_14,25.57553269738163
+roll_mean_30,0.0
+roll_std_30,32.311272769957924

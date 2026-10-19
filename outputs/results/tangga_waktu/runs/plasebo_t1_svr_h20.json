@@ -1,0 +1,1 @@
+{"setup": "plasebo_t1", "model": "svr", "horizon": 20, "MAE": 67469.45310639273, "RMSE": 104536.68003489995, "sMAPE": 3.5004879590693863, "MAPE": 3.4143634452490046, "test_n": 861, "waktu_detik": 1.2, "protocol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo", "rev": "ml-r2", "data_hash": "7aea8db80d44"}

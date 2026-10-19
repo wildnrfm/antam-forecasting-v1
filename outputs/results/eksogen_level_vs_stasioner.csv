@@ -1,0 +1,8 @@
+indikator,ADF_p_level,ADF_p_stasioner,uji_luar_rentang_train_%_level,uji_luar_rentang_train_%_stasioner,max_abs_z_uji_level,max_abs_z_uji_stasioner
+dxy,0.3644,0.0,41.2,0.0,2.6,4.6
+sp500,0.9983,0.0,87.3,0.1,6.9,8.4
+usd_idr,0.8992,0.0,28.2,0.0,2.8,4.3
+ihsg,0.1924,0.0,87.2,0.0,4.2,7.7
+us10yr,0.6998,0.0,79.3,0.0,3.9,4.0
+ffr,0.7183,0.0,100.0,0.0,6.5,12.5
+bi_rate,0.4388,0.0,0.0,0.0,0.9,12.8

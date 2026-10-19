@@ -1,0 +1,1 @@
+{"setup": "multivariat", "model": "adaboost", "horizon": 20, "MAE": 22900.27161838194, "RMSE": 30151.303566028713, "sMAPE": 2.34873343656623, "MAPE": 2.3760192448745032, "test_n": 260, "waktu_detik": 6.8, "protocol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo", "rev": "ml-r2", "data_hash": "7aea8db80d44"}

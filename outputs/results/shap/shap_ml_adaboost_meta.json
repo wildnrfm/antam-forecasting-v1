@@ -1,0 +1,23 @@
+{
+ "tag": "ml_adaboost",
+ "method": "PermutationExplainer",
+ "completeness_err_rel": 1.737567003577553e-15,
+ "n_explained": 100,
+ "n_background": 50,
+ "base_return_pct": 1.9658103625222683,
+ "top3": [
+  {
+   "variabel": "emas",
+   "porsi_pct": 75.81
+  },
+  {
+   "variabel": "sp500",
+   "porsi_pct": 16.17
+  },
+  {
+   "variabel": "ihsg",
+   "porsi_pct": 2.98
+  }
+ ],
+ "repro_maxrel_diff": 1.4411592825582019e-16
+}

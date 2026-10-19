@@ -1,0 +1,23 @@
+,Univ. h=1,Univ. h=5,Univ. h=10,Univ. h=20,Univ. h=30,Multi. h=1,Multi. h=5,Multi. h=10,Multi. h=20,Multi. h=30
+lightgbm,True,True,True,True,True,True,True,True,True,True
+xgboost,True,True,True,True,True,True,True,True,True,True
+rf,True,True,True,True,True,True,True,True,True,True
+catboost,True,True,True,True,True,True,True,True,True,True
+gbm,False,True,True,True,True,True,True,True,True,True
+svr,False,True,True,False,True,True,True,False,False,False
+extra_trees,False,True,True,True,True,True,True,True,True,True
+hist_gbm,False,True,True,True,True,True,True,True,True,True
+adaboost,True,True,True,True,True,True,True,True,True,True
+elasticnet,True,True,True,True,True,True,True,True,True,True
+lstm,True,True,True,True,True,True,True,True,True,True
+gru,True,True,True,True,True,True,True,True,True,True
+bilstm,True,True,True,True,True,True,True,True,True,True
+bigru,True,True,True,True,True,True,True,True,True,True
+transformer,True,True,True,True,True,True,True,True,False,True
+dlinear,True,True,True,True,True,True,True,True,True,True
+nlinear,False,True,True,True,True,True,True,True,True,True
+patchtst,True,True,True,True,True,True,True,True,True,True
+lstm_att,True,True,True,True,True,True,True,True,True,True
+gru_att,True,True,True,True,True,True,True,True,False,True
+dpformer,True,True,True,True,True,True,True,True,True,True
+drift,True,True,True,True,True,True,True,True,True,True

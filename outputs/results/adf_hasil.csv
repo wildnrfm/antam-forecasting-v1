@@ -1,0 +1,4 @@
+variabel,ADF_stat,p_value,kritis_1pct,kritis_5pct,lag,obs,stasioner
+harga_jual (level),1.4424,0.9973,-3.4319,-2.8622,31,4293,False
+emas_ret (return),-22.7899,0.0,-3.4319,-2.8622,7,4317,True
+harga_jual (diff-1),-8.2807,0.0,-3.4319,-2.8622,30,4293,True

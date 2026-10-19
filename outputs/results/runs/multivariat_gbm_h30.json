@@ -1,0 +1,1 @@
+{"setup": "multivariat", "model": "gbm", "horizon": 30, "MAE": 84654.00996291649, "RMSE": 127231.64232680819, "sMAPE": 4.338459225139659, "MAPE": 4.233504908718294, "test_n": 859, "waktu_detik": 9.0, "protocol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo", "rev": "ml-r2", "data_hash": "7aea8db80d44"}

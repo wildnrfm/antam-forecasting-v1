@@ -1,0 +1,23 @@
+{
+ "tag": "dl_gru_att",
+ "method": "shap.GradientExplainer",
+ "completeness_err_rel": 0.09741308646801523,
+ "n_explained": 100,
+ "n_background": 50,
+ "base_return_pct": 0.6607937323516311,
+ "top3": [
+  {
+   "variabel": "us10yr",
+   "porsi_pct": 20.01
+  },
+  {
+   "variabel": "ihsg",
+   "porsi_pct": 15.89
+  },
+  {
+   "variabel": "dxy",
+   "porsi_pct": 13.64
+  }
+ ],
+ "target_std_train": 0.02873278922119275
+}

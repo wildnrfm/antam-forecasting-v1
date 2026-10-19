@@ -1,0 +1,6 @@
+setup,model,horizon,MAE,RMSE,sMAPE,MAPE,drift_mu,protocol
+benchmark,drift,1,13247.116541840087,21815.25709964341,0.6915027221779446,0.6912013373063596,0.00029523187810415495,v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo
+benchmark,drift,5,30088.73330038061,46740.06893116617,1.572031241260563,1.5650039295322473,0.0014460097308645289,v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo
+benchmark,drift,10,42684.69321826206,67640.41547274253,2.236357248986984,2.214578949217177,0.002919218634833274,v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo
+benchmark,drift,20,62952.99065470795,97801.23848487188,3.235331680223947,3.173484182830096,0.005959143835203071,v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo
+benchmark,drift,30,83313.38842054208,127185.404775712,4.2087455831309,4.094489973924011,0.009077824226231518,v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo

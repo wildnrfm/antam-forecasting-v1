@@ -1,0 +1,23 @@
+{
+ "tag": "dpformer_dpformer",
+ "method": "shap.GradientExplainer",
+ "completeness_err_rel": 0.09810715314106268,
+ "n_explained": 100,
+ "n_background": 50,
+ "base_return_pct": 0.40271132031012336,
+ "top3": [
+  {
+   "variabel": "us10yr",
+   "porsi_pct": 22.39
+  },
+  {
+   "variabel": "dxy",
+   "porsi_pct": 17.88
+  },
+  {
+   "variabel": "sp500",
+   "porsi_pct": 14.88
+  }
+ ],
+ "target_std_train": 0.02873278922119275
+}

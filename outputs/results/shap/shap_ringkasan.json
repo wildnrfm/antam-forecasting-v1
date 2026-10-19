@@ -1,0 +1,40 @@
+{
+ "setup": "multivariat",
+ "h": 20,
+ "wakil": {
+  "dpformer": "dpformer",
+  "dl": "gru_att",
+  "ml": "adaboost"
+ },
+ "info": {
+  "dpformer": {
+   "model": "dpformer",
+   "tag": "dpformer_dpformer",
+   "sumber": "bobot_tersimpan",
+   "weights": "..\\outputs\\results\\models\\dpformer_multivariat_h20.weights.h5",
+   "metode": "shap.GradientExplainer",
+   "completeness_err": 0.09810715314106268,
+   "detik": 18.4
+  },
+  "dl": {
+   "model": "gru_att",
+   "tag": "dl_gru_att",
+   "sumber": "bobot_tersimpan",
+   "weights": "..\\outputs\\results\\models\\gru_att_multivariat_h20.weights.h5",
+   "metode": "shap.GradientExplainer",
+   "completeness_err": 0.09741308646801523,
+   "detik": 11.2
+  },
+  "ml": {
+   "model": "adaboost",
+   "tag": "ml_adaboost",
+   "sumber": "dilatih_ulang_deterministik",
+   "repro_maxrel_diff": 1.4411592825582019e-16,
+   "metode": "PermutationExplainer",
+   "completeness_err": 1.737567003577553e-15,
+   "detik": 158.0
+  }
+ },
+ "n_background": 50,
+ "n_explain": 100
+}

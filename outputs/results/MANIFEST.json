@@ -1,0 +1,229 @@
+{
+  "nama": "antam_forecasting",
+  "versi": "1.0.0",
+  "tanggal_freeze": "2026-10-19",
+  "waktu_freeze": "2026-10-19 20:29:51",
+  "protokol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo",
+  "rev_ml": "ml-r2",
+  "konfigurasi_eksperimen": {
+    "horizons": [
+      1,
+      5,
+      10,
+      20,
+      30
+    ],
+    "setups": [
+      "univariat",
+      "multivariat"
+    ],
+    "n_model_ml": 10,
+    "n_model_dl": 11,
+    "n_model_total": 21,
+    "seq_len": 10,
+    "n_run_diharapkan": 210,
+    "target": "R_h(i) = p(i+h)/p(i) - 1",
+    "split": "kronologis 70/10/20 dengan embargo validasi"
+  },
+  "data": {
+    "file": "data/processed/data_gabungan.csv",
+    "baris": 4325,
+    "kolom": 16,
+    "tanggal_awal": "2010-01-05",
+    "tanggal_akhir": "2026-08-03",
+    "data_fingerprint": "7aea8db80d44"
+  },
+  "lingkungan": {
+    "python": "3.13.0",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "paket_kunci": {
+      "catboost": "1.2.10",
+      "keras": "3.15.1",
+      "lightgbm": "4.7.0",
+      "matplotlib": "3.11.2",
+      "numpy": "2.5.4",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "shap": "0.53.0",
+      "statsmodels": "0.15.0",
+      "tensorflow": "2.21.0",
+      "xgboost": "3.4.1",
+      "yfinance": "1.7.0"
+    }
+  },
+  "hasil": {
+    "run": {
+      "json_metrik": 210,
+      "pred_csv": 210,
+      "history_json": 110,
+      "fimp_csv": 80,
+      "stale": 0,
+      "stale_daftar": [],
+      "protocol_terlihat": {
+        "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo": 210
+      },
+      "rev_terlihat": {
+        "ml-r2": 100,
+        "None": 110
+      }
+    },
+    "figur": {
+      "png": 69,
+      "pdf": 69
+    },
+    "tabel_top_level": {
+      "total_file": 50,
+      "csv": 48,
+      "json": 2
+    },
+    "subdirektori": {
+      "ablation": 66,
+      "models": 12,
+      "runs": 610,
+      "seeds": 480,
+      "shap": 11,
+      "skenario_b": 170,
+      "tangga_waktu": 140,
+      "walkforward": 816
+    }
+  },
+  "notebook": {
+    "total": 20,
+    "seluruh_tereksekusi": 20,
+    "error": 0,
+    "detail": [
+      {
+        "file": "00_unduh_indikator_makro.ipynb",
+        "sel_kode": 5,
+        "tereksekusi": 5,
+        "error": 0
+      },
+      {
+        "file": "01_pembersihan_data.ipynb",
+        "sel_kode": 5,
+        "tereksekusi": 5,
+        "error": 0
+      },
+      {
+        "file": "02_penggabungan_data.ipynb",
+        "sel_kode": 5,
+        "tereksekusi": 5,
+        "error": 0
+      },
+      {
+        "file": "03_eda_dan_stasioneritas.ipynb",
+        "sel_kode": 9,
+        "tereksekusi": 9,
+        "error": 0
+      },
+      {
+        "file": "04_feature_engineering.ipynb",
+        "sel_kode": 6,
+        "tereksekusi": 6,
+        "error": 0
+      },
+      {
+        "file": "05_dpformer.ipynb",
+        "sel_kode": 7,
+        "tereksekusi": 7,
+        "error": 0
+      },
+      {
+        "file": "06_dl_models.ipynb",
+        "sel_kode": 3,
+        "tereksekusi": 3,
+        "error": 0
+      },
+      {
+        "file": "07_ml_models.ipynb",
+        "sel_kode": 4,
+        "tereksekusi": 4,
+        "error": 0
+      },
+      {
+        "file": "08_validasi_integritas.ipynb",
+        "sel_kode": 10,
+        "tereksekusi": 10,
+        "error": 0
+      },
+      {
+        "file": "09_hasil_dan_ranking.ipynb",
+        "sel_kode": 8,
+        "tereksekusi": 8,
+        "error": 0
+      },
+      {
+        "file": "10_uji_statistik.ipynb",
+        "sel_kode": 7,
+        "tereksekusi": 7,
+        "error": 0
+      },
+      {
+        "file": "11_interpretasi_shap.ipynb",
+        "sel_kode": 7,
+        "tereksekusi": 7,
+        "error": 0
+      },
+      {
+        "file": "12_analisis_tambahan.ipynb",
+        "sel_kode": 9,
+        "tereksekusi": 9,
+        "error": 0
+      },
+      {
+        "file": "13_uji_robustness_seed.ipynb",
+        "sel_kode": 4,
+        "tereksekusi": 4,
+        "error": 0
+      },
+      {
+        "file": "14_ablation_study.ipynb",
+        "sel_kode": 6,
+        "tereksekusi": 6,
+        "error": 0
+      },
+      {
+        "file": "15_skenario_b.ipynb",
+        "sel_kode": 5,
+        "tereksekusi": 5,
+        "error": 0
+      },
+      {
+        "file": "16_walk_forward.ipynb",
+        "sel_kode": 5,
+        "tereksekusi": 5,
+        "error": 0
+      },
+      {
+        "file": "17_selang_kepercayaan_vs_drift.ipynb",
+        "sel_kode": 5,
+        "tereksekusi": 5,
+        "error": 0
+      },
+      {
+        "file": "18_kombinasi_dan_drift_adaptif.ipynb",
+        "sel_kode": 4,
+        "tereksekusi": 4,
+        "error": 0
+      },
+      {
+        "file": "19_tangga_waktu_informasi.ipynb",
+        "sel_kode": 8,
+        "tereksekusi": 8,
+        "error": 0
+      }
+    ]
+  },
+  "repository": {
+    "file_tanpa_venv": 2558,
+    "total_byte": 268695267,
+    "total_mb": 268.7
+  },
+  "verifikasi": {
+    "data_fingerprint_cocok_dengan_run": true,
+    "run_basi": 0,
+    "ada_error_notebook": false,
+    "dibuat_pada": "v1.0.0 freeze"
+  }
+}

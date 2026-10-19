@@ -1,0 +1,1 @@
+{"setup": "skenario_b", "model": "lightgbm", "horizon": 10, "MAE": 42437.86720987336, "RMSE": 67515.48919348029, "sMAPE": 2.2276904542272913, "MAPE": 2.206642319185586, "test_n": 863, "waktu_detik": 0.3, "protocol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo", "rev": "ml-r2", "data_hash": "7aea8db80d44"}

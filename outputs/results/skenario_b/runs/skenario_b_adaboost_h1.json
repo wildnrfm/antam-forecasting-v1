@@ -1,0 +1,1 @@
+{"setup": "skenario_b", "model": "adaboost", "horizon": 1, "MAE": 12913.52709960558, "RMSE": 21341.223288189427, "sMAPE": 0.6718108812877094, "MAPE": 0.6719659736214222, "test_n": 864, "waktu_detik": 8.8, "protocol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo", "rev": "ml-r2", "data_hash": "7aea8db80d44"}

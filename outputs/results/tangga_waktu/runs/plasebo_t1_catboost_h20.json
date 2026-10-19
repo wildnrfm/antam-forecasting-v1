@@ -1,0 +1,1 @@
+{"setup": "plasebo_t1", "model": "catboost", "horizon": 20, "MAE": 62899.590301462405, "RMSE": 97716.07687006138, "sMAPE": 3.2319062599390596, "MAPE": 3.170553151513485, "test_n": 861, "waktu_detik": 0.5, "protocol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo", "rev": "ml-r2", "data_hash": "7aea8db80d44"}

@@ -1,0 +1,1 @@
+{"setup": "univariat", "model": "extra_trees", "horizon": 5, "MAE": 30235.465207205063, "RMSE": 47630.369027440225, "sMAPE": 1.5705060534191586, "MAPE": 1.5664562543767986, "test_n": 864, "waktu_detik": 4.7, "protocol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo", "rev": "ml-r2", "data_hash": "7aea8db80d44"}

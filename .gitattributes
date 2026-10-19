@@ -1,0 +1,21 @@
+# ---------------------------------------------------------------------------
+# Larangan konversi baris otomatis (LF <-> CRLF)
+# ---------------------------------------------------------------------------
+# Repository ini berisi deret waktu, tabel hasil, dan MANIFEST.sha256.
+# Bila Git mengonversi ujung baris, checksum MANIFEST akan tidak cocok
+# PADAHAL tidak ada perubahan nyata — alarm palsu yang menutupi perubahan
+# sungguhan. Maka seluruh file di-set sebagai non-normalized.
+#
+#   -text  = jangan normalisasi ujung baris; simpan apa adanya
+#   (perbedaan tetap bisa di-diff; ini bukan marking binary)
+* -text
+
+# ---------------------------------------------------------------------------
+# Batas file biner — jangan pernah di-diff/di-transform sebagai teks
+# ---------------------------------------------------------------------------
+*.h5    binary
+*.npz   binary
+*.png   binary
+*.pdf   binary
+*.jpg   binary
+*.woff2 binary

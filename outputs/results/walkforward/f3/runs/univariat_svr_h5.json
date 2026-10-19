@@ -1,0 +1,1 @@
+{"setup": "univariat", "model": "svr", "horizon": 5, "MAE": 10048.67781045232, "RMSE": 12887.369834070627, "sMAPE": 0.9913605842539117, "MAPE": 0.9894176197232731, "test_n": 260, "waktu_detik": 0.7, "protocol": "v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo", "rev": "ml-r2", "data_hash": "7aea8db80d44"}
