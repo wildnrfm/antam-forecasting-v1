@@ -7,6 +7,28 @@ penomoran versi mengikuti [Semantic Versioning](https://semver.org/lang/id/).
 
 ---
 
+## [1.0.1] — 2026-10-21
+
+**Rilis dokumentasi.** Tidak ada perubahan pada `data/`, `notebooks/`, `outputs/`, atau
+`src/`; seluruh hasil eksperimen tetap pada freeze **v1.0.0** (`data_hash`
+`7aea8db80d44`).
+
+### Diperbaiki
+
+- Judul README yang terpotong: "Bebas-Ke" → "Bebas-Kebocoran"
+- Klaim Skenario B diselaraskan dengan naskah: headline **10 model ML** (median
+  `rel_mse` 0,9267; 9/10 lolos BH), varian 12 model dicatat sebagai catatan kaki
+  (11/12 lolos di h=1; DPformer lolos di h=20)
+- Catatan keluarga uji BH ditambahkan: 1 vs 0 untuk DM vs Drift, dan 0 vs 2 untuk
+  perbandingan multivariat vs univariat
+- Typo "resli" → "resmi"
+- Jumlah dependensi langsung: 20 → **17**
+- Pohon repository, prinsip arsitektur, dan perintah verifikasi `MANIFEST.sha256`
+  diperbarui
+- `panduan_bimbingan/` ditambahkan ke repository
+
+---
+
 ## [1.0.0] — 2026-10-19
 
 **Versi pembekuan (freeze) pertama.** Seluruh hasil eksperimen dikunci dan diverifikasi
@@ -34,7 +56,7 @@ sebelum ditulis ke sini.
 
 - `README.md` — dokumentasi lengkap: protokol, peta notebook & modul, cara reproduksi,
   hasil utama, dan daftar batasan yang diketahui
-- `requirements.txt` — 20 dependensi langsung, terkunci dari versi terpasang
+- `requirements.txt` — 17 dependensi langsung, terkunci dari versi terpasang
 - `requirements-full.txt` — 155 entri `pip freeze --all` untuk reproduksi persis
 - `MANIFEST.sha256` — checksum seluruh isi repository
 - `outputs/results/MANIFEST.json` — ringkasan mesin-baca tentang hasil yang dibekukan

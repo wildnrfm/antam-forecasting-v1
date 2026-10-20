@@ -1,19 +1,20 @@
-# Peramalan Harga Emas Antam — 21 Model dengan Protokol Bebas-Ke
+# Peramalan Harga Emas Antam — 21 Model dengan Protokol Bebas-Kebocoran
 
 Eksperimen peramalan *direct multi-horizon* atas harga jual emas Antam (Rp/gram) untuk
 horizon **1, 5, 10, 20, dan 30 hari kerja**, membandingkan **21 model** (10 machine
 learning + 11 deep learning, termasuk DPformer) terhadap benchmark Drift, dengan
-penekanan pada **kejujuran metode**: setiap pagi anti-*lookahead* diuji secara otomatis,
+penekanan pada **kejujuran metode**: setiap pagar anti-*lookahead* diuji secara otomatis,
 dan setiap klaim statistik dilaporkan lengkap dengan daya ujinya (MDE).
 
 | | |
 |---|---|
-| **Versi** | `1.0.0` (lihat [`VERSION`](VERSION)) |
+| **Versi repo** | `1.0.1` (lihat [`VERSION`](VERSION)) |
+| **Freeze hasil** | `1.0.0` · 2026-10-19 |
 | **Protokol** | `v9-21model-dpformer-bao-aligned-honest-mossa-shap-leakage-safe-embargo` |
 | **Revisi ML** | `ml-r2` |
 | **Sidik jari data** | `7aea8db80d44` |
 | **Python** | 3.13.0 |
-| **Integritas** | [`MANIFEST.sha256`](MANIFEST.sha256) · [`outputs/results/MANIFEST.json`](outputs/results/MANIFEST.json) |
+| **Integritas** | [`MANIFEST.sha256`](MANIFEST.sha256) (repo) · [`outputs/results/MANIFEST.json`](outputs/results/MANIFEST.json) (freeze hasil) |
 
 ---
 
@@ -24,7 +25,7 @@ dan setiap klaim statistik dilaporkan lengkap dengan daya ujinya (MDE).
 | Sumber utama | Harga emas Antam (dataset tidak resmi, `data/raw/antam_historical_gold_prices_download_asli/`) |
 | Makro | Yahoo Finance (DXY, S&P 500, USD/IDR, IHSG) · FRED (US 10Y, FFR) · BIS (BI-Rate) |
 | Periode | **2010-01-05 → 2026-08-03** |
-| Bentuk | `data/processed/data_gabungan.csv` — **4.325 baris × 16 kolom**, tanpa *missing* |
+| Bentuk | `data/processed/data_gabungan.csv` — **4.325 baris × 16 variabel** (di luar kolom `tanggal`), tanpa *missing* |
 | Kalender | Hari kerja emas; hari libur tanpa pengumuman diisi **forward-fill** (bukan interpolasi, karena interpolasi memakai harga pengumuman berikutnya = *lookahead*) |
 
 **Tujuh variabel makro** sudah di-*lag* 1 hari kerja sejak tahap penggabungan, sehingga
@@ -99,18 +100,23 @@ Konfigurasi 10 baseline DL mengikuti **Bao et al. (2026), Table 3** sedekat mung
 ```
 antam_forecasting/
 ├── data/
-│   ├── raw/                    8 sumber mentah + cache fallback API
-│   └── processed/              8 file bersih + data_gabungan.csv (tabel master)
+│   ├── raw/                    dataset Antam + 8 sumber makro + cache fallback API
+│   └── processed/              8 file bersih + glitch_dibuang.csv + data_gabungan.csv
 ├── src/                        MESIN — seluruh logika ada di sini (lihat §5)
 ├── notebooks/                  00–19, orkestrasi (lihat §4)
-└── outputs/
-    ├── figures/                69 PNG + 69 PDF
-    └── results/                48 CSV top-level + subdirektori (runs, walkforward, dst.)
+├── outputs/
+│   ├── figures/                69 PNG + 69 PDF
+│   └── results/                48 CSV top-level + subdirektori (runs, walkforward, dst.)
+├── panduan_bimbingan/          RINGKASAN.md + PENJELASAN.md (Bahasa Indonesia)
+├── README.md · CHANGELOG.md · VERSION
+├── requirements.txt · requirements-full.txt
+└── MANIFEST.sha256
 ```
 
-**Prinsip arsitektur:** notebook **tidak pernah** menghitung sesuatu sendiri. Semua
-pelatihan/analisis melewati `src/runners.py`, sehingga eksperimen utama, ablation,
-skenario B, walk-forward, dan uji seed tidak mungkin berbeda diam-diam.
+**Prinsip arsitektur:** notebook **tidak melatih model sendiri**. Semua pelatihan
+melewati `src/runners.py`; analisis dan figur melewati modul `src/` (kecuali NB 00–01
+yang khusus mengunduh/membersihkan data), sehingga eksperimen utama, ablation, skenario B,
+walk-forward, dan uji seed tidak mungkin berbeda diam-diam.
 
 ---
 
@@ -126,7 +132,7 @@ skenario B, walk-forward, dan uji seed tidak mungkin berbeda diam-diam.
 | **C. Model** | `05_dpformer` | 2 setup × 5 horizon + **tuning MOSSA** |
 | | `06_dl_models` | 10 baseline DL |
 | | `07_ml_models` | 10 model ML |
-| **D. Integritas** | `08_validasi_integritas` | **7 pagi anti-bocoran** (mutation testing) |
+| **D. Integritas** | `08_validasi_integritas` | **7 pagar anti-bocoran** (mutation testing) |
 | **E. Hasil** | `09_hasil_dan_ranking` | Peringkat MAE, metrik bebas-skala, pemilihan model wakil |
 | | `10_uji_statistik` | DM-HLN, BH-FDR, MCS 90%, Pesaran–Timmermann |
 | | `11_interpretasi_shap` | SHAP untuk 3 model wakil |
@@ -192,6 +198,23 @@ $env:TA_QUICK = "1"    # horizon [5,20], EPOCHS=2, unit kecil, output ke outputs
 | `TA_SEED` | `42` | Seed acak |
 | `TA_THREADS` | — | Batas jumlah thread |
 
+### Verifikasi integritas
+
+```powershell
+# PowerShell: laporkan file yang hash-nya tidak cocok dengan MANIFEST.sha256
+$ok = 0; $bad = @()
+Get-Content MANIFEST.sha256 | Where-Object { $_ -match '^[0-9a-f]{64}\s{2}' } | ForEach-Object {
+    if ($_ -match '^([0-9a-f]{64})\s{2}(.+)$') {
+        $hash = (Get-FileHash $Matches[2] -Algorithm SHA256).Hash.ToLower()
+        if ($hash -eq $Matches[1]) { $ok++ } else { $bad += $Matches[2] }
+    }
+}
+"COCOK: $ok | TIDAK COCOK: $($bad.Count)"
+$bad
+```
+
+Di Git Bash/Linux: `sha256sum -c MANIFEST.sha256`.
+
 ---
 
 ## 7. Hasil utama
@@ -213,20 +236,22 @@ sel/10), diikuti RandomForest (6,1) dan ElasticNet (6,3).
 
 | Uji | Hasil |
 |---|---|
-| DM vs Drift (210 uji) | 115/210 `rel_mse < 1`; **16** dengan `p < 0,05`; **hanya 1** lolos BH-FDR → *univariat transformer, h=1, `rel_mse` 0,9950, `q` 0,041* |
+| DM vs Drift (210 uji) | 115/210 `rel_mse < 1`; **16** dengan `p < 0,05`; **1** lolos BH-FDR dengan keluarga per setup×horizon → *univariat transformer, h=1, `rel_mse` 0,9950, `q` 0,041*. Dengan keluarga seluruh 210 uji, **0** yang lolos |
 | MCS 90% | Hampir seluruh model **dan** Drift masuk *confidence set* pada hampir semua horizon |
-| Multivariat vs univariat (105 uji) | **0 lolos BH-FDR di semua horizon** → 7 variabel makro tidak menambah informasi di luar return emas sendiri |
+| Multivariat vs univariat (105 uji) | **0 lolos BH-FDR** dengan keluarga 105 uji → 7 variabel makro tidak menambah informasi di luar return emas sendiri. Dengan keluarga per horizon, **2** lolos (GBM & HistGBM h=1, `q` 0,0138) |
 | Walk-forward (6 fold, 2020–2026) | Tidak ada model yang signifikan mengalahkan Drift |
 | 5 seed × 6 model DL (60 kombinasi) | CV MAE **0,034% – 1,30%** (median 0,29%) → variasi seed jauh lebih kecil daripada selisih antar-model |
 | MOSSA vs default | **0/10 uji lolos BH** → tuning tidak signifikan |
-| **Skenario B (penutupan hari-*t*), h=1** | n=12, **median `rel_mse` 0,9267**, **11/12 lolos BH** → perbaikan nyata |
-| Skenario B, h ≥ 5 | Tidak ada yang lolos BH (median ≈ 1,00) |
+| **Skenario B (penutupan hari-*t*), h=1** | 10 model ML: **median `rel_mse` 0,9267** (**7,3%** lebih baik dari baseline multivariat lag-1), **9/10 lolos BH**. Varian 12 model (tambah DPformer & GRU+Att): median 0,9267, **11/12 lolos** |
+| Skenario B, h ≥ 5 | 10 model ML: tidak ada yang lolos BH (median ≈ 1,00). Varian 12 model: DPformer lolos di h=20 (`q` 0,0149) |
 | **Plasebo t+1** (tidak layak) | median ≈ 1,01, **0 lolos BH** → bukti tidak ada artefak |
 
-**Interpretasi:** satu-satunya temuan positif yang bertahan adalah **informasi penutupan
-pasar hari-*t* membantu tepat di h=1**, dan plasebo t+1 gagal sehingga temuan itu bukan
-artefak. Untuk h ≥ 5, dan untuk fitur makro secara umum, tidak ada perbedaan yang dapat
-dibuktikan secara statistik.
+**Interpretasi:** temuan positif yang paling konsisten adalah **informasi penutupan
+pasar hari-*t* membantu di h=1** (9 dari 10 model ML), dan plasebo t+1 gagal sehingga
+temuan itu bukan artefak. Pada varian 12 model ada satu pengecualian (DPformer, h=20,
+`q` 0,0149); karena tidak muncul di 10 model ML dan tidak konsisten lintas horizon,
+temuan utama tetap h=1. Untuk h ≥ 5, dan untuk fitur makro secara umum, tidak ada
+perbedaan yang dapat dibuktikan secara konsisten.
 
 ---
 
@@ -261,7 +286,7 @@ Dilaporkan di sini agar tidak ditemukan pertama kali saat *review*:
    perbedaan pada horizon panjang **bukan** bukti ketiadaan efek.
 5. **Periode uji adalah reli besar** (harga 1,04 → 3,17 juta Rp; volatilitas 0,97%/hari vs
    0,65% di validasi). Walk-forward mencakup 2020–2026, tetapi 2010–2020 hanya data latih.
-6. **Sumber data emas tidak resli** (dataset komunitas). Perlu validasi silang terhadap
+6. **Sumber data emas tidak resmi** (dataset komunitas). Perlu validasi silang terhadap
    situs resmi Antam.
 7. **⚠️ Ukuran file bobot.** `outputs/results/models/bilstm_multivariat_h20.weights.h5`
    berukuran **96,9 MB** — hanya 3,1 MB di bawah limit keras GitHub (100 MB menolak
@@ -276,8 +301,11 @@ Dilaporkan di sini agar tidak ditemukan pertama kali saat *review*:
   [`data/raw/antam_historical_gold_prices_download_asli/README.md`](data/raw/antam_historical_gold_prices_download_asli/README.md)
 - Indikator makro: Yahoo Finance, FRED, BIS
 - Acuan metodologis: Bao et al. (2026), *Expert Systems with Applications*
+- Dokumen pendamping (Bahasa Indonesia):
+  [`panduan_bimbingan/RINGKASAN.md`](panduan_bimbingan/RINGKASAN.md) ·
+  [`panduan_bimbingan/PENJELASAN.md`](panduan_bimbingan/PENJELASAN.md)
 - **Belum ada lisensi** untuk kode repository ini (sengaja dilewati pada v1.0.0).
 
 ---
 
-<sub>Versi 1.0.0 · Protokol `v9` · data_hash `7aea8db80d44` · di-freeze 2026-10-19</sub>
+<sub>Repo v1.0.1 · hasil dibekukan pada v1.0.0 · Protokol `v9` · data_hash `7aea8db80d44` · 2026-10-21</sub>
