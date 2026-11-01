@@ -1,0 +1,179 @@
+flowchart TD
+  %% ============================================================
+  %% ALUR PENELITIAN — antam_forecasting
+  %% Referensi: Bao et al. (2026), Expert Systems with Applications 298:129594
+  %%
+  %% A = spesifikasi inti mengikuti jurnal (bukan salinan kode baris-per-baris)
+  %% B = adaptasi dari jurnal karena data/target/implementasi berbeda,
+  %%     atau karena paper tidak merinci
+  %% C = kontribusi penelitian ini (tidak ada di jurnal)
+  %%
+  %% Versi 1.0.2 (isi dikoreksi terhadap hasil/kode). Versi tata letak lebar: alur_penelitian_lebar.mmd.
+  %% Cara pakai: copy seluruh isi file ini ke Mermaid Live Editor
+  %% (https://mermaid.live) atau ke blok mermaid di Markdown.
+  %% ============================================================
+
+  classDef clsRef fill:#F1F5F9,stroke:#475569,stroke-width:1.2px,color:#0F172A;
+  classDef clsA fill:#DBEAFE,stroke:#1D4ED8,stroke-width:1.5px,color:#1E3A8A;
+  classDef clsB fill:#FEF3C7,stroke:#D97706,stroke-width:1.5px,color:#78350F;
+  classDef clsC fill:#DCFCE7,stroke:#15803D,stroke-width:1.5px,color:#14532D;
+  classDef clsNote fill:#FFFFFF,stroke:#CBD5E1,stroke-width:1px,color:#334155;
+
+  subgraph LEGEND["Legenda"]
+    LA["A · mengikuti spesifikasi jurnal"]:::clsA
+    LB["B · adaptasi dari jurnal"]:::clsB
+    LC["C · kontribusi penelitian ini"]:::clsC
+    LREF["Abu-abu · referensi / mulai-selesai"]:::clsRef
+    LNOTE["Putih · catatan"]:::clsNote
+  end
+
+  subgraph P0["0 · Jangkar referensi"]
+    REF["Bao et al. (2026)<br/>Expert Systems with Applications 298:129594<br/>Spot gold USD 2003–2023 · 6 makro<br/>10 DL + DPformer · h=5/10/20/30 · MSE/MAE/MAPE<br/>MOSSA multi-objective · SHAP prior-weighted"]:::clsRef
+  end
+
+  subgraph P1["1 · Data & pembersihan"]
+    D1["B · Harga emas Antam (Rp/gram)<br/>dataset komunitas · 2010-01-05 → 2026-08-03"]:::clsB
+    D2["B · 7 makro: DXY, S&P 500, US10Y, FFR,<br/>USD/IDR, IHSG, BI-Rate<br/>Yahoo Finance · FRED · BIS (BI-Rate: ekspor manual)"]:::clsB
+    D3["B · Forward-fill hari kerja tanpa pengumuman<br/>(bukan interpolasi; mencegah lookahead)"]:::clsB
+    D4["B · Kalender hari kerja (Senin–Jumat)<br/>+ buang 23 glitch kurs USD/IDR"]:::clsB
+    D5["B · Lag-1 makro + FFR as-of<br/>+ transformasi stasioner"]:::clsB
+    D6["B · data_gabungan.csv<br/>4.325 baris × 16 variabel"]:::clsB
+  end
+
+  subgraph P2["2 · Desain eksperimen"]
+    E1["A · EDA: statistik deskriptif<br/>+ uji ADF"]:::clsA
+    E2["B · Profil rezim/trend per tahun<br/>(adaptasi Fig. 3 jurnal)"]:::clsB
+    E3["C · Lead-lag waktu informasi<br/>+ porsi return nol latih (22,47%)"]:::clsC
+    E4["B · Target: return kumulatif h hari<br/>(direct multi-horizon)"]:::clsB
+    E5["B · Fitur ML: lag + rolling + makro stasioner<br/>(15 univariat / 22 multivariat)<br/>DL: jendela 10 hari multi-channel"]:::clsB
+    E6["C · Dua setup: univariat vs multivariat<br/>(uji nilai tambah makro)"]:::clsC
+    E7["A · Split kronologis 70/10/20<br/>+ z-score fit hanya train"]:::clsA
+    E8["C · Embargo / purge horizon-aware"]:::clsC
+    E9["A · Horizon 5, 10, 20, 30 hari"]:::clsA
+    E10["C · Tambah horizon 1 hari"]:::clsC
+  end
+
+  subgraph P3["3 · Model"]
+    M1["A · 10 baseline DL<br/>LSTM · GRU · BiLSTM · BiGRU<br/>LSTM-Att · GRU-Att · Transformer<br/>DLinear · NLinear · PatchTST"]:::clsA
+    M2["C · 10 baseline ML<br/>LightGBM · XGBoost · RF · CatBoost · GBM<br/>SVR · ExtraTrees · HistGB · AdaBoost · ElasticNet"]:::clsC
+    M3["A · DPformer: dekomposisi trend/seasonal<br/>(moving average Ws=10)"]:::clsA
+    M4["A · Trend: patch + positional encoding<br/>+ Transformer encoder"]:::clsA
+    M5["B · Seasonal: Conv1D Ks=5 + attention/Transformer<br/>(detail implementasi: satu blok encoder)"]:::clsB
+    M6["B · Fusion θ·trend + (1−θ)·seasonal<br/>(θ dilatih; paper tidak merinci)"]:::clsB
+    M7["B · MOSSA disederhanakan<br/>single-objective · pop=20 · maks 100 iter<br/>(berhenti dini: iter 22 univariat / 28 multivariat)"]:::clsB
+    M8["C · Fitness hanya validasi ber-embargo"]:::clsC
+  end
+
+  subgraph P4["4 · Pelatihan"]
+    T1["A · AdamW · MSE · 100 epoch<br/>batch/unit sesuai Table 3"]:::clsA
+    T2["B · Early stopping patience 10"]:::clsB
+  end
+
+  subgraph P5["5 · Evaluasi"]
+    V1["A · MAE + MAPE<br/>(ruang harga)"]:::clsA
+    V2["B · RMSE + sMAPE<br/>(harga & return)"]:::clsB
+    V3["C · MSE relatif vs Drift (ruang return)<br/>+ peringkat + R² OOS"]:::clsC
+    V4["C · DM-HLN (210 uji) · BH-FDR<br/>(keluarga uji 21 / 105 / 210) · MCS 90% · PT"]:::clsC
+    V5["C · MDE + selang kepercayaan<br/>(MDE median vs Drift tetap 3,4–6,6%)"]:::clsC
+    V6["C · Benchmark Drift<br/>(tetap / ekspansif / rolling 250)"]:::clsC
+  end
+
+  subgraph P6["6 · Robustness & kontrol"]
+    R1["C · 7 pagar integritas<br/>+ mutation testing"]:::clsC
+    R2["C · Seed 42 (utama)<br/>+ multiseed 42–46 (6 model DL)"]:::clsC
+    R3["C · Walk-forward 6 fold<br/>2020–2026 · h=5, 20"]:::clsC
+    R4["C · Skenario B: informasi hari-t<br/>(origin malam) · eksploratif"]:::clsC
+    R5["C · Plasebo t+1: penutupan yang terbit setelah<br/>harga target (ekspektasi: tanpa gain)"]:::clsC
+    R6["C · Tangga waktu informasi<br/>lag-1 → hari-t → plasebo<br/>(dirancang setelah melihat lead-lag)"]:::clsC
+    R7["C · Ablation 4 grup fitur<br/>+ MOSSA vs default"]:::clsC
+    R8["B · Stabilitas blok/rezim<br/>(adaptasi event window)"]:::clsB
+    R9["C · Diagnosis loss curve"]:::clsC
+    R10["C · Kombinasi model<br/>+ drift adaptif"]:::clsC
+  end
+
+  subgraph P7["7 · Interpretasi"]
+    I1["A · SHAP post-hoc<br/>(konsep dari jurnal)"]:::clsA
+    I2["B · GradientExplainer (DL) / PermutationExplainer (ML)<br/>3 model wakil: DPformer, GRU-Att, AdaBoost"]:::clsB
+    I3["C · Perbandingan importance<br/>DL vs ML"]:::clsC
+  end
+
+  subgraph P8["8 · Output & kesimpulan"]
+    O1["C · 210 run<br/>21 model × 2 setup × 5 horizon"]:::clsC
+    O2["C · Stempel protocol / rev / data_hash<br/>210/210 CURRENT · MANIFEST"]:::clsC
+    O3["C · 69 PNG + 69 PDF · 48 CSV<br/>notebook 00–19"]:::clsC
+    O4["C · Kesimpulan: 0 lolos BH di keluarga 105 dan 210;<br/>1 lolos hanya di keluarga 21 (Transformer univariat h=1, selisih 0,5%)<br/>tidak ada bukti kuat mengalahkan Drift"]:::clsC
+    O5["C · Sinyal hari-t di h=1 (eksploratif)<br/>9/10 ML lolos BH · median rel_mse ≈ 0,927<br/>plasebo: 0 lolos BH · varian 12 model: DPformer lolos di h=20"]:::clsC
+    O6["C · Makro tidak menambah informasi secara konsisten<br/>(0/105 lolos BH di keluarga 105; 2 lolos di keluarga per-horizon: GBM, HistGBM h=1)"]:::clsC
+    O7["C · Batasan: daya uji terbatas (MDE median vs Drift tetap 3,4–6,6%;<br/>vs Drift bergulir 48–70% di h=20–30) · satu aset/negara<br/>harga administratif · data komunitas · uji: reli lalu koreksi"]:::clsC
+  end
+
+  subgraph CATATAN["Catatan penting"]
+    NOTE["A = spesifikasi inti, bukan salinan kode baris-per-baris.<br/>Garis putus-putus = spesifikasi dari jurnal.<br/>J-B/L-B dan event window persis jurnal tidak direplikasi;<br/>repo memakai ADF, lead-lag/return-nol, dan stabilitas blok/rezim."]:::clsNote
+  end
+
+  %% --- alur utama ---
+  MULAI(["Mulai"]):::clsRef
+  SELESAI(["Selesai"]):::clsRef
+
+  MULAI --> D1
+  D1 --> D3
+  D2 --> D5
+  D3 --> D4
+  D4 --> D6
+  D5 --> D6
+  D6 --> E1
+  E1 --> E2
+  E2 --> E3
+  E3 --> E4
+  E4 --> E5
+  E5 --> E6
+  E6 --> E7
+  E7 --> E8
+  E8 --> E9
+  E9 --> E10
+  E10 --> M1
+  E10 --> M2
+  E10 --> M3
+  M3 --> M4
+  M3 --> M5
+  M4 --> M6
+  M5 --> M6
+  M6 --> M7
+  M7 --> M8
+  M1 --> T1
+  M2 --> T1
+  M8 --> T1
+  T1 --> T2
+  T2 --> V1
+  T2 --> V2
+  T2 --> V6
+  V1 --> V3
+  V2 --> V3
+  V6 --> V3
+  V3 --> V4
+  V4 --> V5
+  V5 --> R1
+  R1 --> R2
+  R2 --> R3
+  R3 --> R4
+  R4 --> R5
+  R5 --> R6
+  R6 --> R7
+  R7 --> R8
+  R8 --> R9
+  R9 --> R10
+  R10 --> I1
+  I1 --> I2
+  I2 --> I3
+  I3 --> O1
+  O1 --> O2
+  O2 --> O3
+  O3 --> O4
+  O4 --> O5
+  O5 --> O6
+  O6 --> O7
+  O7 --> SELESAI
+
+  %% --- garis putus-putus: node referensi mengarah ke tahap yang spesifikasinya diambil ---
+  REF -.-> M1
+  REF -.-> M3
